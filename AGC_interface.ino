@@ -1,12 +1,7 @@
 #include <LiquidCrystal.h>
 
-
+// golbal Variables
 int index = 0;
-
-int incomingData = 0;
-
-// to allow for ease of adding more events
-int AGCcodes[] = {49, 50};
 
 
 // LCD init
@@ -28,10 +23,6 @@ void loop()
 
   if (Serial.available() == 0) return;
 
-  //  int on = 255;
-  //
-  //  int off = 0;
-
   char c = (char)Serial.read();
 
   if (c == '#')
@@ -43,6 +34,7 @@ void loop()
   else if (index == 0)
   {
     analogWrite(6, c == '1' ? 255 : 0);
+    index++;
   }
   else
   {
@@ -51,41 +43,6 @@ void loop()
 
 
 
-
-  //  if (Serial.available() > 0) {
-  //
-  //    incomingData = Serial.read();
-  //
-  //
-  //    Serial.print("I received: ");
-  //    Serial.println(incomingData, DEC);
-  //    Serial.println("-----------------");
-  //
-  //
-  //  }
-  //
-  //
-  //
-  //  if (incomingData == AGCcodes[0]) {
-  //
-  //
-  //    analogWrite(6, on);
-  //
-  //  } else {
-  //
-  //    analogWrite(6, off);
-  //
-  //  }
-  //
-  //  if (incomingData == 50) {
-  //
-  //    lcd.begin(16, 2);
-  //    lcd.print("V37");
-  //    lcd.setCursor(0, 1);
-  //    lcd.print("N00");
-  //
-  //
-  //  }
 
 
 }
