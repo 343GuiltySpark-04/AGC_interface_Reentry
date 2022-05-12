@@ -28,60 +28,64 @@ void loop()
 
   if (Serial.available() == 0) return;
 
-//  int on = 255;
-//
-//  int off = 0;
+  //  int on = 255;
+  //
+  //  int off = 0;
 
-char c = (char)Serial.read();
+  char c = (char)Serial.read();
 
-    if (c == '#')
-    {
-        index = 0;
-        lcd.clear();
-        lcd.home();
-    }
-    else
-    {
-        lcd.print(c);
-    }
+  if (c == '#')
+  {
+    index = 0;
+    lcd.clear();
+    lcd.home();
+  }
+  else if (index == 0)
+  {
+    analogWrite(6, c == '1' ? 255 : 0);
+  }
+  else
+  {
+    lcd.print(c);
+  }
 
 
 
 
-//  if (Serial.available() > 0) {
-//
-//    incomingData = Serial.read();
-//
-//
-//    Serial.print("I received: ");
-//    Serial.println(incomingData, DEC);
-//    Serial.println("-----------------");
-//    
-//
-//  }
-//
-//
-//
-//  if (incomingData == AGCcodes[0]) {
-//
-//
-//    analogWrite(6, on);
-//
-//  } else {
-//
-//    analogWrite(6, off);
-//
-//  }
-//
-//  if (incomingData == 50) {
-//
-//    lcd.begin(16, 2);
-//    lcd.print("V37");
-//    lcd.setCursor(0, 1);
-//    lcd.print("N00");
-//
-//
-//  }
+  //  if (Serial.available() > 0) {
+  //
+  //    incomingData = Serial.read();
+  //
+  //
+  //    Serial.print("I received: ");
+  //    Serial.println(incomingData, DEC);
+  //    Serial.println("-----------------");
+  //
+  //
+  //  }
+  //
+  //
+  //
+  //  if (incomingData == AGCcodes[0]) {
+  //
+  //
+  //    analogWrite(6, on);
+  //
+  //  } else {
+  //
+  //    analogWrite(6, off);
+  //
+  //  }
+  //
+  //  if (incomingData == 50) {
+  //
+  //    lcd.begin(16, 2);
+  //    lcd.print("V37");
+  //    lcd.setCursor(0, 1);
+  //    lcd.print("N00");
+  //
+  //
+  //  }
 
 
 }
