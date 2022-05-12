@@ -1,8 +1,9 @@
 
 
 
-byte incoming = 0;
+byte incomingData = 0;
 
+// to allow for ease of adding more events
 int AGCcodes[] = {49, 50};
 
 
@@ -24,18 +25,18 @@ void loop()
 
   if (Serial.available() > 0) {
 
-    incoming = Serial.read();
+    incomingData = Serial.read();
 
 
     Serial.print("I received: ");
-    Serial.println(incoming, DEC);
+    Serial.println(incomingData, DEC);
     Serial.println("-----------------");
     Serial.flush();
 
   }
 
 
-  if (incoming == AGCcodes[0]) {
+  if (incomingData == AGCcodes[0]) {
 
 
     analogWrite(11, on);
