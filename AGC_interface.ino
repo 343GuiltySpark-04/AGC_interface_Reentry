@@ -1,3 +1,5 @@
+#include <LiquidCrystal.h>
+
 
 
 
@@ -7,11 +9,16 @@ byte incomingData = 0;
 int AGCcodes[] = {49, 50};
 
 
+// LCD init 
+const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+
 
 void setup()
 {
   Serial.begin(9600);
-  pinMode(11, OUTPUT);
+  pinMode(6, OUTPUT);
+ 
 }
 
 void loop()
@@ -39,14 +46,23 @@ void loop()
   if (incomingData == AGCcodes[0]) {
 
 
-    analogWrite(11, on);
+    analogWrite(6, on);
 
   } else {
 
-    analogWrite(11, off);
+    analogWrite(6, off);
     
   }
 
+  if (incomingData == 50){
+
+  lcd.begin(16, 2);
+  lcd.print("V37");
+  lcd.setCursor(0,1);
+  lcd.print("N00");
+ 
+    
+  } 
  
 
 }
