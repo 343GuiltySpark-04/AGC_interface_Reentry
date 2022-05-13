@@ -46,15 +46,15 @@ void loop()
 
     index++;
 
-  } else if (index == 2){
+  } else if (index == 2) {
 
-   if (c == '1'){
+    if (c == '1') {
 
-    lcd.setCursor(0, 2);
-    lcd.print("UPLINK ACT");
-    lcd.home();
-    
-   }
+      lcd.setCursor(0, 2);
+      lcd.print("UPLINK ACT");
+      lcd.home();
+
+    }
     index++;
   }
   else
