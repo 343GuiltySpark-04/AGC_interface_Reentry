@@ -37,7 +37,15 @@ void loop()
   else if (index == 0)
   {
     analogWrite(6, c == '1' ? 255 : 0);
+
+    if (c == '1') {
+      lcd.setCursor(0, 2);
+      lcd.print("COMP ACVTY");
+      lcd.home();
+    }
+
     index++;
+
   } else if (index == 1) {
 
     if (c == '1') {
@@ -52,6 +60,11 @@ void loop()
   } else if (index == 2) {
 
     analogWrite(9, c == '1' ? 255 : 0);
+    if (c == '1') {
+      lcd.setCursor(0, 2);
+      lcd.print("UPLINK ACVTY");
+      lcd.home();
+    }
     index++;
 
   } else if (index == 3) {
@@ -74,9 +87,65 @@ void loop()
 
     index++;
 
-  }
-  else
-  {
+  } else if (index == 5) {
+    if (c == '1') {
+
+
+      lcd.setCursor(0, 2);
+      lcd.print("NO ATT");
+      lcd.home();
+    }
+
+    index++;
+
+  } else if (index == 6) {
+    if (c == '1') {
+
+      lcd.setCursor(0, 2);
+      lcd.print("TEMP");
+      lcd.home();
+
+    }
+
+    index++;
+
+  } else if (index == 7) {
+    if (c == '1') {
+      lcd.setCursor(0, 2);
+      lcd.print("GIMBAL LOCK");
+      lcd.home();
+    }
+
+    index++;
+
+  } else if (index == 8) {
+    if (c == '1') {
+      lcd.setCursor(0, 2);
+      lcd.print("PROG");
+      lcd.home();
+    }
+
+    index++;
+
+  } else if (index == 9) {
+    if (c == '1') {
+      lcd.setCursor(0, 2);
+      lcd.print("RESTART");
+      lcd.home();
+    }
+
+    index++;
+
+  } else if (index == 10) {
+    if (c == '1') {
+      lcd.setCursor(0, 2);
+      lcd.print("TRACKER");
+      lcd.home();
+    }
+
+    index++;
+
+  } else {
     lcd.print(c);
   }
 
