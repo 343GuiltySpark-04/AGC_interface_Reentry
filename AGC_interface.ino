@@ -1,15 +1,21 @@
 #include <LiquidCrystal.h>
 
-// golbal Variables
+// Global Variables
 int index = 0;
 byte reg_sel = 0;
+byte R1_Index = 0;
+byte R2_Index = 0;
+
+// Booleans
+bool R1_Read = false;
+bool R2_Read = false;
 
 // Arrays
 char R1[6];
 char R2[6];
 char R3[6];
 
-// LCD init
+// LCD Init
 const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
 LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 
@@ -22,11 +28,32 @@ void setup()
   pinMode(9, OUTPUT);
   pinMode(LED_BUILTIN, OUTPUT);
   pinMode(A2, INPUT);
+  pinMode(LED_BUILTIN, OUTPUT);
 
 }
 
+
+// TODO: allow VERB, NOUN, AND PROG to display at the same time as registers!
+
+// TODO: Make the register select system less buggy!
+
 void loop()
 {
+
+  if (digitalRead(A2) == HIGH) {
+      reg_sel++;
+      if (reg_sel > 3){
+        reg_sel = 0;
+      }
+      //Serial.print(reg_sel);
+      delay(100);
+  }
+
+//  if (digitalRead(A2) == HIGH){
+//    digitalWrite(LED_BUILTIN, HIGH);
+//  } else {
+//    digitalWrite(LED_BUILTIN, LOW);
+//  }
 
 
 
@@ -39,7 +66,38 @@ void loop()
     index = 0;
     lcd.clear();
     lcd.home();
+  } else if (c == '<') {
+    R1_Read = true;
+    index++;
+
+  } else if (c == '>') {
+    R1_Read = false;
+    R1_Index = 0;
+    index++;
+  } else if (R1_Read == true) {
+
+    R1[R1_Index] = c;
+    R1_Index++;
+    index++;
+
+  } else if (c == '$'){
+    
+    R2_Read = true;
+    index++;
+    
+  } else if (c == '%'){
+    
+    R2_Read = false;
+    R2_Index = 0;
+    index++;
+    
+  } else if (R2_Read == true){
+    R2[R2_Index] = c;
+    R2_Index++;
+    index++;
   }
+
+  
   else if (index == 0)
   {
     analogWrite(6, c == '1' ? 255 : 0);
@@ -151,11 +209,33 @@ void loop()
 
     index++;
 
-  } else {
+  } else if  (reg_sel == 1) {
+
+    lcd.setCursor(0, 2);
+    lcd.print("R1: ");
+    for (int i = 0; i < 6; i++) {
+
+      lcd.print(R1[i]);
+
+    }
+
+    lcd.home();
+  }  else if (reg_sel == 2){
+    lcd.setCursor(0, 2);
+    lcd.print("R2: ");
+    for (int i = 0; i < 6; i++) {
+
+    lcd.print(R2[i]);
+      
+    }
+
+    lcd.home();
+    
+  }
+  
+  else {
     lcd.print(c);
   }
-
-
 
 
 
