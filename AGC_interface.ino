@@ -13,8 +13,6 @@ void setup()
 {
   Serial.begin(9600);
   lcd.begin(16, 2);
-  lcd.cursor();
-  lcd.blink();
   pinMode(6, OUTPUT);
   pinMode(9, OUTPUT);
 
