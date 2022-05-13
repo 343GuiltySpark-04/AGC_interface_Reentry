@@ -2,6 +2,7 @@
 
 // golbal Variables
 int index = 0;
+byte reg_sel = 0;
 
 // Arrays
 char R1[6];
@@ -19,11 +20,14 @@ void setup()
   lcd.begin(16, 2);
   pinMode(6, OUTPUT);
   pinMode(9, OUTPUT);
+  pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(A2, INPUT);
 
 }
 
 void loop()
 {
+
 
 
   if (Serial.available() == 0) return;
