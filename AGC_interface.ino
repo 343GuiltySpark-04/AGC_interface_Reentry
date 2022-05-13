@@ -13,7 +13,10 @@ void setup()
 {
   Serial.begin(9600);
   lcd.begin(16, 2);
+  lcd.cursor();
+  lcd.blink();
   pinMode(6, OUTPUT);
+  pinMode(9, OUTPUT);
 
 }
 
@@ -48,14 +51,9 @@ void loop()
 
   } else if (index == 2) {
 
-    if (c == '1') {
-
-      lcd.setCursor(0, 2);
-      lcd.print("UPLINK ACT");
-      lcd.home();
-
-    }
+    analogWrite(9, c == '1' ? 255 : 0);
     index++;
+
   } else if (index == 3) {
 
     if (c == '1') {
