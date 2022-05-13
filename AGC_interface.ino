@@ -4,6 +4,7 @@
 /* AGC Interface for Reentry: An Orbial Simulator.
     GitHub Repo: https://github.com/343GuiltySpark-04/AGC_interface_Reentry
     And don't forget to grab the Python client from its repo: https://github.com/343GuiltySpark-04/Reentry-AGC-Arduino
+    Version: 0.4c
 */
 
 
