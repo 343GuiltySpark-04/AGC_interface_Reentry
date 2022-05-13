@@ -66,6 +66,16 @@ void loop()
 
     index++;
 
+  } else if (index == 4) {
+
+    if (c == '1') {
+      lcd.setCursor(0, 2);
+      lcd.print("KEY REL");
+      lcd.home();
+    }
+
+    index++;
+
   }
   else
   {
