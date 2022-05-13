@@ -3,6 +3,10 @@
 // golbal Variables
 int index = 0;
 
+// Arrays
+char R1[6];
+char R2[6];
+char R3[6];
 
 // LCD init
 const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
