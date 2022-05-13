@@ -56,6 +56,16 @@ void loop()
 
     }
     index++;
+  } else if (index == 3) {
+
+    if (c == '1') {
+      lcd.setCursor(0, 2);
+      lcd.print("OPR ERR");
+      lcd.home();
+    }
+
+    index++;
+
   }
   else
   {
