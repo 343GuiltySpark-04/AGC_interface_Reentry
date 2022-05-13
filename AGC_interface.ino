@@ -5,10 +5,12 @@ int index = 0;
 byte reg_sel = 0;
 byte R1_Index = 0;
 byte R2_Index = 0;
+byte R3_Index = 0;
 
 // Booleans
 bool R1_Read = false;
 bool R2_Read = false;
+bool R3_Read = false;
 
 // Arrays
 char R1[6];
@@ -26,9 +28,7 @@ void setup()
   lcd.begin(16, 2);
   pinMode(6, OUTPUT);
   pinMode(9, OUTPUT);
-  pinMode(LED_BUILTIN, OUTPUT);
   pinMode(A2, INPUT);
-  pinMode(LED_BUILTIN, OUTPUT);
 
 }
 
@@ -41,20 +41,12 @@ void loop()
 {
 
   if (digitalRead(A2) == HIGH) {
-      reg_sel++;
-      if (reg_sel > 3){
-        reg_sel = 0;
-      }
-      //Serial.print(reg_sel);
-      delay(100);
+    reg_sel++;
+    if (reg_sel > 3) {
+      reg_sel = 0;
+    }
+    delay(100);
   }
-
-//  if (digitalRead(A2) == HIGH){
-//    digitalWrite(LED_BUILTIN, HIGH);
-//  } else {
-//    digitalWrite(LED_BUILTIN, LOW);
-//  }
-
 
 
   if (Serial.available() == 0) return;
@@ -80,24 +72,43 @@ void loop()
     R1_Index++;
     index++;
 
-  } else if (c == '$'){
-    
+  } else if (c == '$') {
+
     R2_Read = true;
     index++;
-    
-  } else if (c == '%'){
-    
+
+  } else if (c == '%') {
+
     R2_Read = false;
     R2_Index = 0;
     index++;
-    
-  } else if (R2_Read == true){
+
+  } else if (R2_Read == true) {
+
     R2[R2_Index] = c;
     R2_Index++;
     index++;
+
+  } else if (c == '^') {
+
+    R3_Read = true;
+    index++;
+
+  } else if (c == '&') {
+
+    R3_Read = false;
+    R3_Index = 0;
+    index++;
+
+  } else if (R3_Read == true) {
+
+    R3[R3_Index] = c;
+    R3_Index++;
+    index++;
+
   }
 
-  
+
   else if (index == 0)
   {
     analogWrite(6, c == '1' ? 255 : 0);
@@ -220,19 +231,29 @@ void loop()
     }
 
     lcd.home();
-  }  else if (reg_sel == 2){
+  }  else if (reg_sel == 2) {
     lcd.setCursor(0, 2);
     lcd.print("R2: ");
     for (int i = 0; i < 6; i++) {
 
-    lcd.print(R2[i]);
-      
+      lcd.print(R2[i]);
+
     }
 
     lcd.home();
-    
+
+  } else if (reg_sel == 3) {
+    lcd.setCursor(0, 2);
+    lcd.print("R3: ");
+    for (int i = 0; i < 6; i++) {
+      lcd.print(R3[i]);
+
+    }
+
+    lcd.home();
+
   }
-  
+
   else {
     lcd.print(c);
   }
