@@ -48,13 +48,13 @@ void setup()
 void loop()
 {
 
-  if (digitalRead(A2) == HIGH) {
-    reg_sel++;
-    if (reg_sel > 3) {
-      reg_sel = 0;
-    }
-    delay(100);
-  }
+//  if (digitalRead(A2) == HIGH) {
+//    reg_sel++;
+//    if (reg_sel > 3) {
+//      reg_sel = 0;
+//    }
+//    delay(100);
+//  }
 
 
   if (Serial.available() == 0) return;
