@@ -122,8 +122,8 @@ void loop()
     analogWrite(6, c == '1' ? 255 : 0);
 
     if (c == '1') {
-      lcd.setCursor(0, 2);
-      lcd.print("COMP ACVTY");
+      lcd.setCursor(11, 0);
+      lcd.print(" COMP");
       lcd.home();
     }
 
