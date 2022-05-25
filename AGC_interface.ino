@@ -133,8 +133,8 @@ void loop()
 
     analogWrite(9, c == '1' ? 255 : 0);
     if (c == '1') {
-      lcd.setCursor(0, 2);
-      lcd.print("UPLINK ACVTY");
+      lcd.setCursor(11, 0);
+      lcd.print(" UPLK");
       lcd.home();
     }
     index++;
