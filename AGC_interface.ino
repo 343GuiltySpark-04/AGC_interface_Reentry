@@ -131,17 +131,6 @@ void loop()
 
   } else if (index == 1) {
 
-    if (c == '1') {
-      lcd.setCursor(0, 2);
-      lcd.print("STBY");
-      lcd.home();
-
-    }
-
-    index++;
-
-  } else if (index == 2) {
-
     analogWrite(9, c == '1' ? 255 : 0);
     if (c == '1') {
       lcd.setCursor(0, 2);
