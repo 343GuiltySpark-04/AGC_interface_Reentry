@@ -11,12 +11,20 @@
 // Global Variables
 int index = 0;
 byte Reg_Index = 0;
+byte data_index = 0;
 
 // Booleans
 bool Reg_Read = false;
+bool Reg_asm = false;
+bool data_asm = false;
+bool data_read = false;
 
 // Arrays
-char Reg[10];
+char Reg_char[10];
+char data_char[11];
+
+// Strings
+String data = " ";
 
 
 // LCD Init
@@ -34,10 +42,6 @@ void setup()
 
 }
 
-
-// TODO: allow VERB, NOUN, AND PROG to display at the same time as registers!
-
-// TODO: Make the register select system less buggy!
 
 void loop()
 {
@@ -63,10 +67,22 @@ void loop()
     index++;
   } else if (Reg_Read == true) {
 
-    Reg[Reg_Index] = c;
+    Reg_char[Reg_Index] = c;
     Reg_Index++;
     index++;
 
+  } else if (c == 'X') {
+    data_read = true;
+    index++;
+
+  } else if (c == 'Z') {
+    data_read = false;
+    data_index = 0;
+    index++;
+  } else if (data_read == true) {
+    data_char[data_index] = c;
+    data_index++;
+    index++;
   }
 
 
@@ -97,17 +113,7 @@ void loop()
 
 
 
-  else {
-    lcd.setCursor(0, 2);
-    for (int i = 0; i < 10; i++) {
 
-      lcd.print(Reg[i]);
-
-    }
-
-    lcd.home();
-    lcd.print(c);
-  }
 
 
 
