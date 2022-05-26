@@ -4,20 +4,19 @@
 /* AGC Interface for Reentry: An Orbial Simulator.
     GitHub Repo: https://github.com/343GuiltySpark-04/AGC_interface_Reentry
     And don't forget to grab the Python client from its repo: https://github.com/343GuiltySpark-04/Reentry-AGC-Arduino
-    Version: 0.5c
+    Version: 0.6d
 */
 
 
 // Global Variables
 int index = 0;
-byte reg_sel = 0;
 byte Reg_Index = 0;
 
 // Booleans
 bool Reg_Read = false;
 
 // Arrays
-char Reg[9];
+char Reg[10];
 
 
 // LCD Init
@@ -31,7 +30,7 @@ void setup()
   lcd.begin(16, 2);
   pinMode(6, OUTPUT);
   pinMode(9, OUTPUT);
-  pinMode(A2, INPUT);
+
 
 }
 
@@ -43,13 +42,6 @@ void setup()
 void loop()
 {
 
-  //  if (digitalRead(A2) == HIGH) {
-  //    reg_sel++;
-  //    if (reg_sel > 3) {
-  //      reg_sel = 0;
-  //    }
-  //    delay(100);
-  //  }
 
 
   if (Serial.available() == 0) return;
@@ -107,7 +99,7 @@ void loop()
 
   else {
     lcd.setCursor(0, 2);
-    for (int i = 0; i < 9; i++) {
+    for (int i = 0; i < 10; i++) {
 
       lcd.print(Reg[i]);
 
