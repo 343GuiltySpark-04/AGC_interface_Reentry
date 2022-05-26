@@ -10,20 +10,9 @@
 
 // Global Variables
 int index = 0;
-byte reg_sel = 0;
-byte R1_Index = 0;
-byte R2_Index = 0;
-byte R3_Index = 0;
 
-// Booleans
-bool R1_Read = false;
-bool R2_Read = false;
-bool R3_Read = false;
 
-// Arrays
-char R1[6];
-char R2[6];
-char R3[6];
+
 
 // LCD Init
 const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
@@ -36,7 +25,6 @@ void setup()
   lcd.begin(16, 2);
   pinMode(6, OUTPUT);
   pinMode(9, OUTPUT);
-  pinMode(A2, INPUT);
 
 }
 
@@ -47,14 +35,6 @@ void setup()
 
 void loop()
 {
-
-  //  if (digitalRead(A2) == HIGH) {
-  //    reg_sel++;
-  //    if (reg_sel > 3) {
-  //      reg_sel = 0;
-  //    }
-  //    delay(100);
-  //  }
 
 
   if (Serial.available() == 0) return;
