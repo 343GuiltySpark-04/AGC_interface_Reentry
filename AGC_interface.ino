@@ -77,13 +77,7 @@ void loop()
 
   }
 
-  else if (index == 0) {
-    reg_sel = int(c);
-    lcd.setCursor(0, 2);
-    lcd.print(c);
-    lcd.home();
-    index++;
-  }
+
   else if (index == 1)
   {
     analogWrite(6, c == '1' ? 255 : 0);
