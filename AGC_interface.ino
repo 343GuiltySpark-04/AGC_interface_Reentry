@@ -4,26 +4,30 @@
 /* AGC Interface for Reentry: An Orbial Simulator.
     GitHub Repo: https://github.com/343GuiltySpark-04/AGC_interface_Reentry
     And don't forget to grab the Python client from its repo: https://github.com/343GuiltySpark-04/Reentry-AGC-Arduino
-    Version: 0.4c
+    Version: 0.7
 */
 
 
 // Global Variables
 int index = 0;
-byte reg_sel = 0;
-byte R1_Index = 0;
-byte R2_Index = 0;
-byte R3_Index = 0;
+byte Reg_Index = 0;
+byte data_index = 0;
 
 // Booleans
-bool R1_Read = false;
-bool R2_Read = false;
-bool R3_Read = false;
+bool Reg_Read = false;
+bool Reg_asm = false;
+bool data_asm = false;
+bool data_read = false;
+bool uplink = false;
 
 // Arrays
-char R1[6];
-char R2[6];
-char R3[6];
+char Reg_char[10];
+char data_char[11];
+
+// Strings
+String Reg = "";
+String data = "";
+
 
 // LCD Init
 const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
@@ -36,25 +40,14 @@ void setup()
   lcd.begin(16, 2);
   pinMode(6, OUTPUT);
   pinMode(9, OUTPUT);
-  pinMode(A2, INPUT);
+
 
 }
 
 
-// TODO: allow VERB, NOUN, AND PROG to display at the same time as registers!
-
-// TODO: Make the register select system less buggy!
-
 void loop()
 {
 
-  if (digitalRead(A2) == HIGH) {
-    reg_sel++;
-    if (reg_sel > 3) {
-      reg_sel = 0;
-    }
-    delay(100);
-  }
 
 
   if (Serial.available() == 0) return;
@@ -66,205 +59,93 @@ void loop()
     index = 0;
     lcd.clear();
     lcd.home();
-  } else if (c == '<') {
-    R1_Read = true;
+  }
+
+  else if (c == '<') {
+    Reg_Read = true;
     index++;
 
   } else if (c == '>') {
-    R1_Read = false;
-    R1_Index = 0;
+    Reg_Read = false;
+    Reg_Index = 0;
+    Reg_asm = true;
     index++;
-  } else if (R1_Read == true) {
+  } else if (Reg_Read == true) {
 
-    R1[R1_Index] = c;
-    R1_Index++;
-    index++;
-
-  } else if (c == '$') {
-
-    R2_Read = true;
+    Reg_char[Reg_Index] = c;
+    Reg_Index++;
     index++;
 
-  } else if (c == '%') {
-
-    R2_Read = false;
-    R2_Index = 0;
+  } else if (c == 'X') {
+    data_read = true;
     index++;
 
-  } else if (R2_Read == true) {
-
-    R2[R2_Index] = c;
-    R2_Index++;
+  } else if (c == 'Z') {
+    data_read = false;
+    data_index = 0;
+    data_asm = true;
     index++;
-
-  } else if (c == '^') {
-
-    R3_Read = true;
+  } else if (data_read == true) {
+    data_char[data_index] = c;
+    data_index++;
     index++;
-
-  } else if (c == '&') {
-
-    R3_Read = false;
-    R3_Index = 0;
+  } else if (Reg_asm == true) {
+    for (int i = 0; i < 10; i++) {
+      Reg += String(Reg_char[i]);
+    }
+    Reg_asm = false;
     index++;
+  } else if (data_asm == true) {
+    for (int i = 0; i < 11; i++) {
+      data += String(data_char[i]);
+    }
+    //lcd.print(data);
+    data_asm = false;
+    index++;
+  }
 
-  } else if (R3_Read == true) {
+  // TODO: Get the damn status lights working right agian!
 
-    R3[R3_Index] = c;
-    R3_Index++;
+  else if (index == 1) {
+    if (c == '1') {
+
+      analogWrite(6, 255);
+
+    } else {
+
+      analogWrite(6, 0);
+    }
+    index++;
+  }
+
+  else if (index == 2) {
+
+    if (c == '1') {
+
+      analogWrite(9, 255);
+
+    } else {
+
+      analogWrite(9, 0);
+
+    }
+
     index++;
 
   }
 
 
-  else if (index == 0)
-  {
-    analogWrite(6, c == '1' ? 255 : 0);
+  lcd.home();
+  lcd.print(data);
+  data = "";
+  lcd.setCursor(0, 2);
+  lcd.print(Reg);
+  Reg = "";
 
-    if (c == '1') {
-      lcd.setCursor(0, 2);
-      lcd.print("COMP ACVTY");
-      lcd.home();
-    }
-
-    index++;
-
-  } else if (index == 1) {
-
-    if (c == '1') {
-      lcd.setCursor(0, 2);
-      lcd.print("STBY");
-      lcd.home();
-
-    }
-
-    index++;
-
-  } else if (index == 2) {
-
-    analogWrite(9, c == '1' ? 255 : 0);
-    if (c == '1') {
-      lcd.setCursor(0, 2);
-      lcd.print("UPLINK ACVTY");
-      lcd.home();
-    }
-    index++;
-
-  } else if (index == 3) {
-
-    if (c == '1') {
-      lcd.setCursor(0, 2);
-      lcd.print("OPR ERR");
-      lcd.home();
-    }
-
-    index++;
-
-  } else if (index == 4) {
-
-    if (c == '1') {
-      lcd.setCursor(0, 2);
-      lcd.print("KEY REL");
-      lcd.home();
-    }
-
-    index++;
-
-  } else if (index == 5) {
-    if (c == '1') {
+  index++;
 
 
-      lcd.setCursor(0, 2);
-      lcd.print("NO ATT");
-      lcd.home();
-    }
 
-    index++;
-
-  } else if (index == 6) {
-    if (c == '1') {
-
-      lcd.setCursor(0, 2);
-      lcd.print("TEMP");
-      lcd.home();
-
-    }
-
-    index++;
-
-  } else if (index == 7) {
-    if (c == '1') {
-      lcd.setCursor(0, 2);
-      lcd.print("GIMBAL LOCK");
-      lcd.home();
-    }
-
-    index++;
-
-  } else if (index == 8) {
-    if (c == '1') {
-      lcd.setCursor(0, 2);
-      lcd.print("PROG");
-      lcd.home();
-    }
-
-    index++;
-
-  } else if (index == 9) {
-    if (c == '1') {
-      lcd.setCursor(0, 2);
-      lcd.print("RESTART");
-      lcd.home();
-    }
-
-    index++;
-
-  } else if (index == 10) {
-    if (c == '1') {
-      lcd.setCursor(0, 2);
-      lcd.print("TRACKER");
-      lcd.home();
-    }
-
-    index++;
-
-  } else if  (reg_sel == 1) {
-
-    lcd.setCursor(0, 2);
-    lcd.print("R1: ");
-    for (int i = 0; i < 6; i++) {
-
-      lcd.print(R1[i]);
-
-    }
-
-    lcd.home();
-  }  else if (reg_sel == 2) {
-    lcd.setCursor(0, 2);
-    lcd.print("R2: ");
-    for (int i = 0; i < 6; i++) {
-
-      lcd.print(R2[i]);
-
-    }
-
-    lcd.home();
-
-  } else if (reg_sel == 3) {
-    lcd.setCursor(0, 2);
-    lcd.print("R3: ");
-    for (int i = 0; i < 6; i++) {
-      lcd.print(R3[i]);
-
-    }
-
-    lcd.home();
-
-  }
-
-  else {
-    lcd.print(c);
-  }
 
 
 
