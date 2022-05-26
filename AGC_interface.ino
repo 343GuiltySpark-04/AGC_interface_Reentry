@@ -10,8 +10,14 @@
 
 // Global Variables
 int index = 0;
+byte reg_sel = 0;
+byte Reg_Index = 0;
 
+// Booleans
+bool Reg_Read = false;
 
+// Arrays
+char Reg[9];
 
 
 // LCD Init
@@ -25,6 +31,7 @@ void setup()
   lcd.begin(16, 2);
   pinMode(6, OUTPUT);
   pinMode(9, OUTPUT);
+  pinMode(A2, INPUT);
 
 }
 
@@ -36,6 +43,14 @@ void setup()
 void loop()
 {
 
+  //  if (digitalRead(A2) == HIGH) {
+  //    reg_sel++;
+  //    if (reg_sel > 3) {
+  //      reg_sel = 0;
+  //    }
+  //    delay(100);
+  //  }
+
 
   if (Serial.available() == 0) return;
 
@@ -46,8 +61,29 @@ void loop()
     index = 0;
     lcd.clear();
     lcd.home();
+  } else if (c == '<') {
+    Reg_Read = true;
+    index++;
+
+  } else if (c == '>') {
+    Reg_Read = false;
+    Reg_Index = 0;
+    index++;
+  } else if (Reg_Read == true) {
+
+    Reg[Reg_Index] = c;
+    Reg_Index++;
+    index++;
+
   }
 
+  else if (index == 0) {
+    reg_sel = int(c);
+    lcd.setCursor(0, 2);
+    lcd.print(c);
+    lcd.home();
+    index++;
+  }
   else if (index == 1)
   {
     analogWrite(6, c == '1' ? 255 : 0);
@@ -70,17 +106,20 @@ void loop()
     }
     index++;
 
-  } else if (c == '<') {
-    lcd.setCursor(0, 2);
-    while (c != '>') {
-      if (Serial.available() == 0) return;
-      c = (char)Serial.read();
-      lcd.print(c);
-      index++;
-    }
   }
 
+
+
+
   else {
+    lcd.setCursor(0, 2);
+    for (int i = 0; i < 9; i++) {
+
+      lcd.print(Reg[i]);
+
+    }
+
+    lcd.home();
     lcd.print(c);
   }
 
