@@ -86,14 +86,14 @@ void loop()
     data_char[data_index] = c;
     data_index++;
     index++;
-  } else if (Reg_asm == true){
-    for (int i = 0; i < 10; i++){
+  } else if (Reg_asm == true) {
+    for (int i = 0; i < 10; i++) {
       Reg += String(Reg_char[i]);
     }
     Reg_asm = false;
     index++;
-  } else if (data_asm == true){
-    for (int i = 0; i < 11; i++){
+  } else if (data_asm == true) {
+    for (int i = 0; i < 11; i++) {
       data += String(data_char[i]);
     }
     //lcd.print(data);
@@ -124,14 +124,14 @@ void loop()
     }
     index++;
 
-  } 
-    lcd.home();
-    lcd.print(data);
-    data = "";
-    lcd.setCursor(0, 2);
-    lcd.print(Reg);
-    Reg = "";
-  
+  }
+  lcd.home();
+  lcd.print(data);
+  data = "";
+  lcd.setCursor(0, 2);
+  lcd.print(Reg);
+  Reg = "";
+
 
 
 
