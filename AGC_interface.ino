@@ -48,13 +48,13 @@ void setup()
 void loop()
 {
 
-//  if (digitalRead(A2) == HIGH) {
-//    reg_sel++;
-//    if (reg_sel > 3) {
-//      reg_sel = 0;
-//    }
-//    delay(100);
-//  }
+  //  if (digitalRead(A2) == HIGH) {
+  //    reg_sel++;
+  //    if (reg_sel > 3) {
+  //      reg_sel = 0;
+  //    }
+  //    delay(100);
+  //  }
 
 
   if (Serial.available() == 0) return;
@@ -66,7 +66,7 @@ void loop()
     index = 0;
     lcd.clear();
     lcd.home();
-  } 
+  }
 
   else if (index == 1)
   {
@@ -89,38 +89,6 @@ void loop()
       lcd.home();
     }
     index++;
-
-  } else if  (reg_sel == 1) {
-
-    lcd.setCursor(0, 2);
-    lcd.print("R1: ");
-    for (int i = 0; i < 6; i++) {
-
-      lcd.print(R1[i]);
-
-    }
-
-    lcd.home();
-  }  else if (reg_sel == 2) {
-    lcd.setCursor(0, 2);
-    lcd.print("R2: ");
-    for (int i = 0; i < 6; i++) {
-
-      lcd.print(R2[i]);
-
-    }
-
-    lcd.home();
-
-  } else if (reg_sel == 3) {
-    lcd.setCursor(0, 2);
-    lcd.print("R3: ");
-    for (int i = 0; i < 6; i++) {
-      lcd.print(R3[i]);
-
-    }
-
-    lcd.home();
 
   }
 
