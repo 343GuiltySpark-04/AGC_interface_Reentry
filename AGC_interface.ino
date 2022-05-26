@@ -18,6 +18,7 @@ bool Reg_Read = false;
 bool Reg_asm = false;
 bool data_asm = false;
 bool data_read = false;
+bool uplink = false;
 
 // Arrays
 char Reg_char[10];
@@ -58,7 +59,9 @@ void loop()
     index = 0;
     lcd.clear();
     lcd.home();
-  } else if (c == '<') {
+  }
+
+  else if (c == '<') {
     Reg_Read = true;
     index++;
 
@@ -101,30 +104,37 @@ void loop()
     index++;
   }
 
+  // TODO: Get the damn status lights working right agian!
 
-  else if (index == 1)
-  {
-    analogWrite(6, c == '1' ? 255 : 0);
-
+  else if (index == 1) {
     if (c == '1') {
-      lcd.setCursor(11, 0);
-      lcd.print(" COMP");
-      lcd.home();
-    }
 
+      analogWrite(6, 255);
+
+    } else {
+
+      analogWrite(6, 0);
+    }
     index++;
+  }
 
-  } else if (index == 2) {
+  else if (index == 2) {
 
-    analogWrite(9, c == '1' ? 255 : 0);
     if (c == '1') {
-      lcd.setCursor(11, 0);
-      lcd.print(" UPLK");
-      lcd.home();
+
+      analogWrite(9, 255);
+
+    } else {
+
+      analogWrite(9, 0);
+
     }
+
     index++;
 
   }
+
+
   lcd.home();
   lcd.print(data);
   data = "";
@@ -132,8 +142,7 @@ void loop()
   lcd.print(Reg);
   Reg = "";
 
-
-
+  index++;
 
 
 
