@@ -24,7 +24,8 @@ char Reg_char[10];
 char data_char[11];
 
 // Strings
-String data = " ";
+String Reg = "";
+String data = "";
 
 
 // LCD Init
@@ -64,6 +65,7 @@ void loop()
   } else if (c == '>') {
     Reg_Read = false;
     Reg_Index = 0;
+    Reg_asm = true;
     index++;
   } else if (Reg_Read == true) {
 
@@ -78,10 +80,24 @@ void loop()
   } else if (c == 'Z') {
     data_read = false;
     data_index = 0;
+    data_asm = true;
     index++;
   } else if (data_read == true) {
     data_char[data_index] = c;
     data_index++;
+    index++;
+  } else if (Reg_asm == true){
+    for (int i = 0; i < 10; i++){
+      Reg += String(Reg_char[i]);
+    }
+    Reg_asm = false;
+    index++;
+  } else if (data_asm == true){
+    for (int i = 0; i < 11; i++){
+      data += String(data_char[i]);
+    }
+    //lcd.print(data);
+    data_asm = false;
     index++;
   }
 
@@ -108,7 +124,14 @@ void loop()
     }
     index++;
 
-  }
+  } 
+    lcd.home();
+    lcd.print(data);
+    data = "";
+    lcd.setCursor(0, 2);
+    lcd.print(Reg);
+    Reg = "";
+  
 
 
 
