@@ -70,6 +70,14 @@ void loop()
     }
     index++;
 
+  } else if (c == '<') {
+    lcd.setCursor(0, 2);
+    while (c != '>') {
+      if (Serial.available() == 0) return;
+      c = (char)Serial.read();
+      lcd.print(c);
+      index++;
+    }
   }
 
   else {
