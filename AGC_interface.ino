@@ -66,63 +66,8 @@ void loop()
     index = 0;
     lcd.clear();
     lcd.home();
-  } else if (c == '<') {
-    R1_Read = true;
-    index++;
+  } 
 
-  } else if (c == '>') {
-    R1_Read = false;
-    R1_Index = 0;
-    index++;
-  } else if (R1_Read == true) {
-
-    R1[R1_Index] = c;
-    R1_Index++;
-    index++;
-
-  } else if (c == '$') {
-
-    R2_Read = true;
-    index++;
-
-  } else if (c == '%') {
-
-    R2_Read = false;
-    R2_Index = 0;
-    index++;
-
-  } else if (R2_Read == true) {
-
-    R2[R2_Index] = c;
-    R2_Index++;
-    index++;
-
-  } else if (c == '^') {
-
-    R3_Read = true;
-    index++;
-
-  } else if (c == '&') {
-
-    R3_Read = false;
-    R3_Index = 0;
-    index++;
-
-  } else if (R3_Read == true) {
-
-    R3[R3_Index] = c;
-    R3_Index++;
-    index++;
-
-  }
-
-  else if (index == 0){
-    reg_sel = int(c);
-    lcd.setCursor(0, 2);
-    lcd.print(c);
-    lcd.home();
-    index++;
-  }
   else if (index == 1)
   {
     analogWrite(6, c == '1' ? 255 : 0);
