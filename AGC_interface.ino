@@ -4,7 +4,7 @@
 /* AGC Interface for Reentry: An Orbial Simulator.
     GitHub Repo: https://github.com/343GuiltySpark-04/AGC_interface_Reentry
     And don't forget to grab the Python client from its repo: https://github.com/343GuiltySpark-04/Reentry-AGC-Arduino
-    Version: 0.5a
+    Version: 0.5c
 */
 
 
@@ -116,8 +116,11 @@ void loop()
 
   }
 
-
-  else if (index == 0)
+  else if (index == 0){
+    reg_sel = int(c);
+    index++;
+  }
+  else if (index == 1)
   {
     analogWrite(6, c == '1' ? 255 : 0);
 
@@ -129,7 +132,7 @@ void loop()
 
     index++;
 
-  } else if (index == 1) {
+  } else if (index == 2) {
 
     analogWrite(9, c == '1' ? 255 : 0);
     if (c == '1') {
